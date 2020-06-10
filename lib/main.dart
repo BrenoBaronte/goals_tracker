@@ -71,28 +71,72 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          Column(
             children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.remove),
-                onPressed: () {
-                  setState(() {
-                    brick.decrement();
-                  });
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () {
-                  setState(() {
-                    brick.increment();
-                  });
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.remove),
+                        onPressed: () {
+                          setState(() {
+                            brick.decrement();
+                          });
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: () {
+                          setState(() {
+                            brick.increment();
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.launch),
+                        onPressed: () {
+                          Navigator.of(context).push(_brickEditRoute());
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+Route _brickEditRoute() {
+  return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => BrickEdit(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return child;
+      });
+}
+
+class BrickEdit extends StatefulWidget {
+  @override
+  _BrickEditState createState() => _BrickEditState();
+}
+
+class _BrickEditState extends State<BrickEdit> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Edit'),
+        centerTitle: true,
       ),
     );
   }
