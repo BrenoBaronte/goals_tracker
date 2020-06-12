@@ -1,7 +1,10 @@
+import 'package:flutter/material.dart';
+
 class Goal {
   String title;
   int count = 0;
   String countUnit = 'days';
+  IconData feeling = Icons.sentiment_very_satisfied;
 
   void increment() => count++;
 

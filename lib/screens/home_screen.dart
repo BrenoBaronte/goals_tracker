@@ -1,7 +1,6 @@
+import 'package:build/components/goal_tile.dart';
 import 'package:build/models/goal.dart';
 import 'package:flutter/material.dart';
-
-import 'goal_edit_screen.dart';
 
 class Home extends StatefulWidget {
   Home({Key key, this.title}) : super(key: key);
@@ -13,7 +12,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<Goal> bricks = [
+  List<Goal> goals = [
     Goal('English'),
     Goal('Flutter'),
     Goal('Exercises'),
@@ -27,89 +26,20 @@ class _HomeState extends State<Home> {
         title: Text(widget.title),
         centerTitle: true,
       ),
-      body: ListView(
-        children: bricks.map(_createItem).toList(),
+      body: SafeArea(
+        child: ListView(
+          children: goals.map(_createItem).toList(),
+        ),
       ),
     );
   }
 
-  Widget _createItem(Goal brick) {
+  Widget _createItem(Goal goal) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: ExpansionTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(width: 10),
-            Flexible(
-                child: Text(
-              brick.count.toString(),
-              style: _textStyle,
-              overflow: TextOverflow.fade,
-            )),
-            SizedBox(width: 20),
-            Text(
-              brick.title,
-              style: _textStyle,
-              overflow: TextOverflow.fade,
-            ),
-          ],
-        ),
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.remove),
-                        onPressed: () {
-                          setState(() {
-                            brick.decrement();
-                          });
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.add),
-                        onPressed: () {
-                          setState(() {
-                            brick.increment();
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.launch),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            PageRouteBuilder(
-                              pageBuilder:
-                                  (context, animation, secondaryAnimation) =>
-                                      GoalEdit(),
-                              transitionsBuilder: (context, animation,
-                                  secondaryAnimation, child) {
-                                return child;
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
+      child: GoalTile(goal),
     );
   }
 }
 
-final TextStyle _textStyle = TextStyle(fontSize: 22.0);
+
