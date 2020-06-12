@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: title,
+      theme: ThemeData.dark().copyWith(accentColor: Colors.amber),
       home: Home(title: title),
     );
   }
