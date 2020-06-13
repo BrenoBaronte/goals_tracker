@@ -1,3 +1,4 @@
+import 'package:build/screens/goal_edit_screen.dart';
 import 'package:build/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: title,
       theme: ThemeData.dark().copyWith(accentColor: Colors.amber),
-      home: Home(title: title),
+      routes: {
+        '/': (context) => Home(title: title,),
+        '/edit': (context) => GoalEdit(),
+      },
     );
   }
 }

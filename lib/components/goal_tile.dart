@@ -1,5 +1,4 @@
 import 'package:build/models/goal.dart';
-import 'package:build/screens/goal_edit_screen.dart';
 import 'package:flutter/material.dart';
 
 class GoalTile extends StatefulWidget {
@@ -57,9 +56,7 @@ class _GoalTileState extends State<GoalTile> {
                     style: _tileTextStyle,
                   ),
                   Expanded(
-                    child: Icon(
-                        widget.goal.feeling
-                    ),
+                    child: Icon(widget.goal.feeling),
                   )
                 ],
               ),
@@ -68,15 +65,14 @@ class _GoalTileState extends State<GoalTile> {
               child: IconButton(
                 icon: Icon(Icons.launch),
                 onPressed: () {
-                  Navigator.of(context).push(
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) =>
-                          GoalEdit(),
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                        return child;
-                      },
-                    ),
+                  Navigator.of(context).pushNamed(
+                    '/edit',
+                    arguments: {
+                      'title': widget.goal.title,
+                      'feeling': widget.goal.feeling.codePoint,
+                      'count': widget.goal.count.toString(),
+                      'countUnit': widget.goal.countUnit,
+                    },
                   );
                 },
               ),
@@ -89,9 +85,9 @@ class _GoalTileState extends State<GoalTile> {
 }
 
 final TextStyle _titleTextStyle = TextStyle(
-  fontSize: 22.0, letterSpacing: 1.0,);
+  fontSize: 22.0,
+  letterSpacing: 1.0,
+);
 
-final TextStyle _tileTextStyle = TextStyle(
-    fontSize: 18,
-    letterSpacing: 1.0,
-    fontWeight: FontWeight.w400);
+final TextStyle _tileTextStyle =
+    TextStyle(fontSize: 18, letterSpacing: 1.0, fontWeight: FontWeight.w400);
