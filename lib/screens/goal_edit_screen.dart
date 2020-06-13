@@ -25,7 +25,7 @@ class _GoalEditState extends State<GoalEdit> {
               Text(data['title']),
               Text(data['count']),
               Text(data['countUnit']),
-              Icon(data['feeling']),
+              Icon(IconData(data['feeling'], fontFamily: 'MaterialIcons'))
             ],
           ),
         ),
