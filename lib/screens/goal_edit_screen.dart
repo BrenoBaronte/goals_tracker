@@ -18,16 +18,85 @@ class _GoalEditState extends State<GoalEdit> {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Text(data['title']),
-              Text(data['count']),
-              Text(data['countUnit']),
-              Icon(IconData(data['feeling'], fontFamily: 'MaterialIcons'))
-            ],
-          ),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              data['title'],
+                              overflow: TextOverflow.fade,
+                              style: TextStyle(
+                                fontSize: 32.0,
+                                letterSpacing: 1.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Flexible(
+                                child: Text(
+                                  data['count'],
+                                  style: TextStyle(fontSize: 24.0),
+                                ),
+                              ),
+                              SizedBox(height: 10.0,),
+                              Flexible(
+                                child: Text(
+                                  data['countUnit'],
+                                  style: TextStyle(fontSize: 20.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                IconData(
+                                  data['feeling'],
+                                  fontFamily: 'MaterialIcons',
+                                ),
+                                size: 30.0,
+                              ),
+                              SizedBox(height: 10.0),
+                              Text(
+                                'Feeling',
+                                style: TextStyle(fontSize: 20.0),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Container(
+
+              ),
+            ),
+          ],
         ),
       ),
     );

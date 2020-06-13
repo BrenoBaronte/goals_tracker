@@ -89,5 +89,8 @@ final TextStyle _titleTextStyle = TextStyle(
   letterSpacing: 1.0,
 );
 
-final TextStyle _tileTextStyle =
-    TextStyle(fontSize: 18, letterSpacing: 1.0, fontWeight: FontWeight.w400);
+final TextStyle _tileTextStyle = TextStyle(
+  fontSize: 18,
+  letterSpacing: 1.0,
+  fontWeight: FontWeight.w400,
+);
