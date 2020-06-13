@@ -6,6 +6,7 @@ class GoalEdit extends StatefulWidget {
 }
 
 class _GoalEditState extends State<GoalEdit> {
+  final String appBarTitle = 'Edit';
   Map data = {};
 
   @override
@@ -14,7 +15,7 @@ class _GoalEditState extends State<GoalEdit> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit'),
+        title: Text(appBarTitle),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -32,7 +33,6 @@ class _GoalEditState extends State<GoalEdit> {
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                               data['title'],
-                              overflow: TextOverflow.fade,
                               style: TextStyle(
                                 fontSize: 32.0,
                                 letterSpacing: 1.0,
@@ -47,42 +47,50 @@ class _GoalEditState extends State<GoalEdit> {
                     child: Row(
                       children: <Widget>[
                         Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Flexible(
-                                child: Text(
-                                  data['count'],
-                                  style: TextStyle(fontSize: 24.0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Flexible(
+                                  child: Text(
+                                    data['count'],
+                                    style: TextStyle(fontSize: 24.0),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 10.0,),
-                              Flexible(
-                                child: Text(
-                                  data['countUnit'],
-                                  style: TextStyle(fontSize: 20.0),
+                                SizedBox(
+                                  height: 10.0,
                                 ),
-                              ),
-                            ],
+                                Flexible(
+                                  child: Text(
+                                    data['countUnit'],
+                                    style: TextStyle(fontSize: 20.0),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                IconData(
-                                  data['feeling'],
-                                  fontFamily: 'MaterialIcons',
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(
+                                  IconData(
+                                    data['feeling'],
+                                    fontFamily: 'MaterialIcons',
+                                  ),
+                                  size: 30.0,
                                 ),
-                                size: 30.0,
-                              ),
-                              SizedBox(height: 10.0),
-                              Text(
-                                'Feeling',
-                                style: TextStyle(fontSize: 20.0),
-                              ),
-                            ],
+                                SizedBox(height: 10.0),
+                                Text(
+                                  'Feeling',
+                                  style: TextStyle(fontSize: 20.0),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -92,9 +100,7 @@ class _GoalEditState extends State<GoalEdit> {
               ),
             ),
             Expanded(
-              child: Container(
-
-              ),
+              child: Container(),
             ),
           ],
         ),
