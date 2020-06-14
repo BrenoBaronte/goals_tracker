@@ -1,45 +1,63 @@
 import 'package:build/components/goal_tile.dart';
+import 'package:build/database/app_database.dart';
 import 'package:build/models/goal.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
+class Home extends StatelessWidget {
   Home({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  List<Goal> goals = [
-    Goal('English'),
-    Goal('Flutter'),
-    Goal('Exercises'),
-    Goal('Final Project'),
-  ];
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(title),
         centerTitle: true,
       ),
       body: SafeArea(
-        child: ListView(
-          children: goals.map(_createItem).toList(),
-        ),
+        child: FutureBuilder<List<Goal>>(
+            initialData: List(),
+            future: findAll(),
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                  break;
+                case ConnectionState.waiting:
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        CircularProgressIndicator(),
+                        Text('loading...'),
+                      ],
+                    ),
+                  );
+                  break;
+                case ConnectionState.active:
+                  break;
+                case ConnectionState.done:
+                  final List<Goal> goals = snapshot.data;
+                  return ListView.builder(
+                    itemBuilder: (context, index) {
+                      final Goal goal = goals[index];
+                      return GoalTile(goal);
+                    },
+                    itemCount: goals.length,
+                  );
+                  break;
+              }
+
+              return Text('Unknown error');
+            }),
       ),
     );
   }
 
-  Widget _createItem(Goal goal) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: GoalTile(goal),
-    );
-  }
+//  Widget _createItem(Goal goal) {
+//    return Padding(
+//      padding: const EdgeInsets.all(16.0),
+//      child: GoalTile(goal),
+//    );
+//  }
 }
-
-
