@@ -1,5 +1,5 @@
 import 'package:build/components/goal_tile.dart';
-import 'package:build/database/app_database.dart';
+import 'package:build/database/dao/goal_dao.dart';
 import 'package:build/models/goal.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +7,7 @@ class Home extends StatelessWidget {
   Home({Key key, this.title}) : super(key: key);
 
   final String title;
+  final GoalDao _goalDao = GoalDao();
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class Home extends StatelessWidget {
       body: SafeArea(
         child: FutureBuilder<List<Goal>>(
             initialData: List(),
-            future: findAll(),
+            future: _goalDao.findAll(),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:

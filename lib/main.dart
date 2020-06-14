@@ -1,5 +1,4 @@
-import 'package:build/database/app_database.dart';
-import 'package:build/models/goal.dart';
+import 'package:build/database/dao/goal_dao.dart';
 import 'package:build/screens/goal_edit_screen.dart';
 import 'package:build/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,7 @@ void main() {
 //      .then((id) {
 //        findAll().then((goals) => debugPrint(goals.toString()));
 //  });
-findAll().then((value) => debugPrint(value.toString()));
+  GoalDao().findAll().then((value) => debugPrint(value.toString()));
 }
 
 class MyApp extends StatelessWidget {
