@@ -10,6 +10,7 @@ void main() {
 //      .then((id) {
 //        findAll().then((goals) => debugPrint(goals.toString()));
 //  });
+findAll().then((value) => debugPrint(value.toString()));
 }
 
 class MyApp extends StatelessWidget {
