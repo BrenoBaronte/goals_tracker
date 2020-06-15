@@ -2,6 +2,7 @@ import 'package:build/components/goal_tile.dart';
 import 'package:build/database/dao/goal_dao.dart';
 import 'package:build/models/goal.dart';
 import 'package:flutter/material.dart';
+import 'package:build/database/dao/goal_dao.dart';
 
 class Home extends StatelessWidget {
   Home({Key key, this.title}) : super(key: key);
@@ -84,6 +85,7 @@ class AddGoalDialog extends StatefulWidget {
 
 class _AddGoalDialogState extends State<AddGoalDialog> {
   final _formKey = GlobalKey<FormState>();
+  final GoalDao _goalDao = GoalDao();
 
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _countController =
@@ -138,7 +140,7 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
                 ),
               ),
             ),
-            // count input area
+            // count input area // todo: trim 0 on left
             Flexible(
               child: Container(
                 child: Center(
@@ -219,22 +221,23 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
                       style: TextStyle(color: Colors.black, fontSize: 18),
                     ),
                     onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        print('object');
-                        return showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                content: Text(_titleController.text +
-                                    ' - ' +
-                                    _countController.text +
-                                    ' - ' +
-                                    _countUnitController.text),
-                              );
-                            });
-                      } else {
-                        print('xi');
-                        return null;
+                      try {
+                        if (_formKey.currentState.validate()) {
+                          print('object');
+                          final goal = Goal(
+                            0,
+                            _titleController.text,
+                            int.parse(_countController.text),
+                            _countUnitController.text,
+                            Icons.sentiment_very_satisfied.codePoint,
+                          );
+                          _goalDao.save(goal);
+                          Navigator.pop(context);
+                        } else {
+                          print('xi');
+                        }
+                      } catch (e) {
+                        print('xablau');
                       }
                     }),
               ),
