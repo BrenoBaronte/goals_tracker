@@ -2,19 +2,24 @@ import 'package:build/components/goal_tile.dart';
 import 'package:build/database/dao/goal_dao.dart';
 import 'package:build/models/goal.dart';
 import 'package:flutter/material.dart';
-import 'package:build/database/dao/goal_dao.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   Home({Key key, this.title}) : super(key: key);
 
   final String title;
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   final GoalDao _goalDao = GoalDao();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(widget.title),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -68,7 +73,7 @@ class Home extends StatelessWidget {
                 backgroundColor: Colors.grey[900],
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0)),
-                child: AddGoalDialog(),
+                child: AddGoalDialog(this),
               );
             },
           );
@@ -79,6 +84,10 @@ class Home extends StatelessWidget {
 }
 
 class AddGoalDialog extends StatefulWidget {
+  final _HomeState parent;
+
+  AddGoalDialog(this.parent);
+
   @override
   _AddGoalDialogState createState() => _AddGoalDialogState();
 }
@@ -223,7 +232,6 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
                     onPressed: () {
                       try {
                         if (_formKey.currentState.validate()) {
-                          print('object');
                           final goal = Goal(
                             0,
                             _titleController.text,
@@ -232,12 +240,12 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
                             Icons.sentiment_very_satisfied.codePoint,
                           );
                           _goalDao.save(goal);
+                          this.widget.parent.setState(() {});
                           Navigator.pop(context);
-                        } else {
-                          print('xi');
-                        }
+                        } else {}
                       } catch (e) {
-                        print('xablau');
+                        // todo: add sentry
+                        print('deu ruim');
                       }
                     }),
               ),
