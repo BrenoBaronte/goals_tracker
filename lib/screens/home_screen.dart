@@ -77,9 +77,27 @@ class Home extends StatelessWidget {
   }
 }
 
-class AddGoalDialog extends StatelessWidget {
+class AddGoalDialog extends StatefulWidget {
+  @override
+  _AddGoalDialogState createState() => _AddGoalDialogState();
+}
 
+class _AddGoalDialogState extends State<AddGoalDialog> {
   final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _countController =
+      TextEditingController(text: '0');
+  final TextEditingController _countUnitController =
+      TextEditingController(text: 'Days');
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _countController.dispose();
+    _countUnitController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,9 +122,9 @@ class AddGoalDialog extends StatelessWidget {
                     child: Wrap(
                       children: <Widget>[
                         TextFormField(
+                          controller: _titleController,
                           decoration: InputDecoration(
-                            hintText: 'Title of the new goal'
-                          ),
+                              hintText: 'Title of the new goal'),
                           validator: (value) {
                             if (value.isEmpty) {
                               return 'Please enter a title';
@@ -129,11 +147,10 @@ class AddGoalDialog extends StatelessWidget {
                     child: Wrap(
                       children: <Widget>[
                         TextFormField(
-                          initialValue: '0',
+                          controller: _countController,
                           keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                              hintText: 'Initial count value'
-                          ),
+                          decoration:
+                              InputDecoration(hintText: 'Initial count value'),
                           validator: (value) {
                             if (value.isEmpty) {
                               return 'Please enter a count value';
@@ -161,10 +178,9 @@ class AddGoalDialog extends StatelessWidget {
                     child: Wrap(
                       children: <Widget>[
                         TextFormField(
-                          initialValue: 'Days',
-                          decoration: InputDecoration(
-                              hintText: 'Count measure'
-                          ),
+                          controller: _countUnitController,
+                          decoration:
+                              InputDecoration(hintText: 'Count measure'),
                           validator: (value) {
                             if (value.isEmpty) {
                               return 'Please enter a count measure';
@@ -205,9 +221,20 @@ class AddGoalDialog extends StatelessWidget {
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
                         print('object');
-                      }
-                      else {
-                        print ('xi');
+                        return showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: Text(_titleController.text +
+                                    ' - ' +
+                                    _countController.text +
+                                    ' - ' +
+                                    _countUnitController.text),
+                              );
+                            });
+                      } else {
+                        print('xi');
+                        return null;
                       }
                     }),
               ),
