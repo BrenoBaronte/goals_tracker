@@ -5,10 +5,6 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(MyApp());
-//  save(Goal(0, 'Goal Title', 0, 'Days', Icons.sentiment_very_satisfied.codePoint))
-//      .then((id) {
-//        findAll().then((goals) => debugPrint(goals.toString()));
-//  });
   GoalDao().findAll().then((value) => debugPrint(value.toString()));
 }
 

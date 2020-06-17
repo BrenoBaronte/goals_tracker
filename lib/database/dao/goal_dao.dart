@@ -16,6 +16,11 @@ class GoalDao {
   static const String _countUnit = 'countUnit';
   static const String _feeling = 'feeling';
 
+  Future remove(int goalId) async {
+    final Database db = await getDatabase();
+    return db.rawDelete('DELETE FROM $_tableName WHERE $_id=$goalId');
+  }
+
   Future<int> save(Goal goal) async {
     final Database db = await getDatabase();
     Map<String, dynamic> goalMap = _toMap(goal);

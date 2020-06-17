@@ -48,7 +48,15 @@ class _HomeState extends State<Home> {
                   return ListView.builder(
                     itemBuilder: (context, index) {
                       final Goal goal = goals[index];
-                      return GoalTile(goal);
+                      return Dismissible(
+                          key: Key(goal.id.toString()),
+                          onDismissed: (direction) {
+                            setState(() {
+                              _goalDao.remove(goal.id);
+                              goals.remove(goal);
+                            });
+                          },
+                          child: GoalTile(goal));
                     },
                     itemCount: goals.length,
                   );
