@@ -50,11 +50,52 @@ class _HomeState extends State<Home> {
                       final Goal goal = goals[index];
                       return Dismissible(
                           key: Key(goal.id.toString()),
-                          onDismissed: (direction) {
-                            setState(() {
-                              _goalDao.remove(goal.id);
-                              goals.remove(goal);
-                            });
+                          onDismissed: (direction) async {
+
+                            bool sure;
+                            await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Dialog(
+                                  backgroundColor: Colors.grey,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0)),
+                                  child: Container(
+                                    width: 300.0,
+                                    height: 200.0,
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text('Are you sure?'),
+                                        Row(
+                                          children: <Widget>[
+                                            MaterialButton(
+                                              onPressed: () {
+                                                sure = false;
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text('No'),
+                                            ),
+                                            MaterialButton(
+                                              onPressed: () {
+                                                sure = true;
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text('Yes'),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                            print(sure);
+
+//                            setState(() {
+//                              _goalDao.remove(goal.id);
+//                              goals.remove(goal);
+//                            });
                           },
                           child: GoalTile(goal));
                     },
