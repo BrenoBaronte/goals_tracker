@@ -1,6 +1,6 @@
 import 'package:build/database/app_database.dart';
 import 'package:build/models/goal.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:sqflite/sqlite_api.dart';
 
 class GoalDao {
   static const String tableSql = 'CREATE TABLE $_tableName('

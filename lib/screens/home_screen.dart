@@ -167,7 +167,7 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
                               return 'Please enter a count value';
                             }
                             try {
-                              var number = int.parse(value);
+                              int.parse(value);
                             } catch (e) {
                               return 'Please enter a numeric value';
                             }
