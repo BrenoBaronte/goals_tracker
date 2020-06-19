@@ -1,6 +1,8 @@
 import 'package:build/components/goal_tile.dart';
 import 'package:build/database/dao/goal_dao.dart';
 import 'package:build/models/goal.dart';
+import 'package:build/screens/add_goal_screen.dart';
+import 'package:build/screens/delete_goal_screen.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -14,9 +16,18 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final GoalDao _goalDao = GoalDao();
+  List<Goal> goals = List();
 
   void callback() {
     setState(() {});
+  }
+
+  void removeCallback(Goal goal) {
+    setState(() {
+      print('1heya');
+      _goalDao.remove(goal.id);
+      goals.remove(goal);
+    });
   }
 
   @override
@@ -49,92 +60,20 @@ class _HomeState extends State<Home> {
                 case ConnectionState.active:
                   break;
                 case ConnectionState.done:
-                  final List<Goal> goals = snapshot.data;
+                  goals = snapshot.data;
                   return ListView.builder(
                     itemBuilder: (context, index) {
                       final Goal goal = goals[index];
                       return Dismissible(
                           key: Key(goal.id.toString()),
                           onDismissed: (direction) async {
-                            bool sure = false;
                             await showDialog(
                               context: context,
                               builder: (context) {
-                                return Dialog(
-                                  backgroundColor: Colors.grey[900],
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(20.0)),
-                                  child: Container(
-                                    width: 300.0,
-                                    height: 200.0,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: const EdgeInsets.all(16.0),
-                                          child: Center(
-                                              child: Text(
-                                            'Delete "${goal.title}"?',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 24.0,
-                                              letterSpacing: 0.5,
-                                            ),
-                                          )),
-                                        ),
-                                        SizedBox(height: 20.0),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: <Widget>[
-                                            MaterialButton(
-                                              elevation: 1,
-                                              color: Colors.amber[400],
-                                              onPressed: () {
-                                                sure = false;
-                                                Navigator.pop(context);
-                                              },
-                                              child: Text(
-                                                'No',
-                                                style: TextStyle(
-                                                    fontSize: 16.0,
-                                                    color: Colors.grey[900]),
-                                              ),
-                                            ),
-                                            MaterialButton(
-                                              elevation: 1,
-                                              color: Colors.amber[400],
-                                              onPressed: () {
-                                                sure = true;
-                                                Navigator.pop(context);
-                                              },
-                                              child: Text(
-                                                'Yes',
-                                                style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  color: Colors.grey[900],
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                );
+                                return DeleteGoalDialog(
+                                    this.callback, this.removeCallback, goal);
                               },
                             );
-                            if (sure) {
-                              setState(() {
-                                _goalDao.remove(goal.id);
-                                goals.remove(goal);
-                              });
-                            }
-                            else {
-                              setState(() {});
-                            }
                           },
                           child: GoalTile(this.callback, goal));
                     },
@@ -161,7 +100,7 @@ class _HomeState extends State<Home> {
                 backgroundColor: Colors.grey[900],
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0)),
-                child: AddGoalDialog(this),
+                child: AddGoalDialog(this.callback),
               );
             },
           );
@@ -173,180 +112,6 @@ class _HomeState extends State<Home> {
         shape: CircularNotchedRectangle(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-    );
-  }
-}
-
-class AddGoalDialog extends StatefulWidget {
-  final _HomeState parent;
-
-  AddGoalDialog(this.parent);
-
-  @override
-  _AddGoalDialogState createState() => _AddGoalDialogState();
-}
-
-class _AddGoalDialogState extends State<AddGoalDialog> {
-  final _formKey = GlobalKey<FormState>();
-  final GoalDao _goalDao = GoalDao();
-
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _countController =
-      TextEditingController(text: '0');
-  final TextEditingController _countUnitController =
-      TextEditingController(text: 'Days');
-
-  @override
-  void dispose() {
-    _titleController.dispose();
-    _countController.dispose();
-    _countUnitController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget>[
-            AppBar(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0)),
-              elevation: 0,
-              title: Text('New Goal'),
-              centerTitle: true,
-            ),
-            // title input area
-            Flexible(
-              child: Container(
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Wrap(
-                      children: <Widget>[
-                        TextFormField(
-                          controller: _titleController,
-                          decoration: InputDecoration(
-                              hintText: 'Title of the new goal'),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Please enter a title';
-                            }
-                            return null;
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            // count input area // todo: trim 0 on left
-            Flexible(
-              child: Container(
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Wrap(
-                      children: <Widget>[
-                        TextFormField(
-                          controller: _countController,
-                          keyboardType: TextInputType.number,
-                          decoration:
-                              InputDecoration(hintText: 'Initial count value'),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Please enter a count value';
-                            }
-                            try {
-                              int.parse(value);
-                            } catch (e) {
-                              return 'Please enter a numeric value';
-                            }
-                            return null;
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            // count unit area
-            Flexible(
-              child: Container(
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Wrap(
-                      children: <Widget>[
-                        TextFormField(
-                          controller: _countUnitController,
-                          decoration:
-                              InputDecoration(hintText: 'Count measure'),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Please enter a count measure';
-                            }
-                            return null;
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            // feeling area // todo: do it right
-            Flexible(
-              child: Container(
-                child: Center(
-                  child: Column(
-                    children: <Widget>[
-                      Text('Feeling', style: TextStyle(fontSize: 20.0)),
-                      SizedBox(height: 10.0),
-                      Icon(Icons.sentiment_very_satisfied),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            // create button
-            Flexible(
-              child: Center(
-                child: MaterialButton(
-                    color: Colors.amber[400],
-                    elevation: 1,
-                    child: Text(
-                      'Create',
-                      style: TextStyle(color: Colors.grey[900], fontSize: 18),
-                    ),
-                    onPressed: () {
-                      try {
-                        if (_formKey.currentState.validate()) {
-                          final goal = Goal(
-                            0,
-                            _titleController.text,
-                            int.parse(_countController.text),
-                            _countUnitController.text,
-                            Icons.sentiment_very_satisfied.codePoint,
-                          );
-                          _goalDao.save(goal);
-                          this.widget.parent.setState(() {});
-                          Navigator.pop(context);
-                        } else {}
-                      } catch (e) {
-                        // todo: add sentry
-                        print('deu ruim');
-                      }
-                    }),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

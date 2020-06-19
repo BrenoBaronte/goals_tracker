@@ -1,5 +1,5 @@
 import 'package:build/database/dao/goal_dao.dart';
-import 'package:build/screens/goal_edit_screen.dart';
+import 'package:build/screens/edit_goal_screen.dart';
 import 'package:build/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
