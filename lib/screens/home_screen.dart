@@ -51,7 +51,7 @@ class _HomeState extends State<Home> {
                       return Dismissible(
                           key: Key(goal.id.toString()),
                           onDismissed: (direction) async {
-                            bool sure;
+                            bool sure = false;
                             await showDialog(
                               context: context,
                               builder: (context) {
