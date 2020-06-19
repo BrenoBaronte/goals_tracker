@@ -108,10 +108,10 @@ class _HomeState extends State<Home> {
             }),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.amber[400],
         child: Icon(
           Icons.add,
-          color: Colors.black,
+          color: Colors.grey[900],
           size: 30,
         ),
         onPressed: () {
@@ -128,6 +128,12 @@ class _HomeState extends State<Home> {
           );
         },
       ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.white10,
+        child: Container(height: 50.0),
+        shape: CircularNotchedRectangle(),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
@@ -272,11 +278,11 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
             Flexible(
               child: Center(
                 child: MaterialButton(
-                    color: Colors.amber,
+                    color: Colors.amber[400],
                     elevation: 1,
                     child: Text(
                       'Create',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
+                      style: TextStyle(color: Colors.grey[900], fontSize: 18),
                     ),
                     onPressed: () {
                       try {

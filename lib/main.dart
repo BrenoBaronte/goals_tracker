@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: title,
-      theme: ThemeData.dark().copyWith(accentColor: Colors.amber),
+      theme: ThemeData.dark().copyWith(accentColor: Colors.amber[400]),
       routes: {
         '/': (context) => Home(
               title: title,
