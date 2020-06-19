@@ -1,8 +1,8 @@
 import 'package:build/components/goal_tile.dart';
 import 'package:build/database/dao/goal_dao.dart';
 import 'package:build/models/goal.dart';
-import 'package:build/screens/add_goal_screen.dart';
-import 'package:build/screens/delete_goal_screen.dart';
+import 'file:///C:/Users/breno/AndroidStudioProjects/build/lib/components/add_goal_dialog.dart';
+import 'file:///C:/Users/breno/AndroidStudioProjects/build/lib/components/delete_goal_dialog.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
