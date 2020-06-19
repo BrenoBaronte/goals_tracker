@@ -51,36 +51,67 @@ class _HomeState extends State<Home> {
                       return Dismissible(
                           key: Key(goal.id.toString()),
                           onDismissed: (direction) async {
-
                             bool sure;
                             await showDialog(
                               context: context,
                               builder: (context) {
                                 return Dialog(
-                                  backgroundColor: Colors.grey,
+                                  backgroundColor: Colors.grey[900],
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.0)),
+                                      borderRadius:
+                                          BorderRadius.circular(20.0)),
                                   child: Container(
                                     width: 300.0,
                                     height: 200.0,
                                     child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: <Widget>[
-                                        Text('Are you sure?'),
+                                        Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: Center(
+                                              child: Text(
+                                            'Delete "${goal.title}"?',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 24.0,
+                                              letterSpacing: 0.5,
+                                            ),
+                                          )),
+                                        ),
+                                        SizedBox(height: 20.0),
                                         Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
                                           children: <Widget>[
                                             MaterialButton(
+                                              elevation: 1,
+                                              color: Colors.amber[400],
                                               onPressed: () {
                                                 sure = false;
                                                 Navigator.pop(context);
                                               },
-                                              child: Text('No'),
+                                              child: Text(
+                                                'No',
+                                                style: TextStyle(
+                                                    fontSize: 16.0,
+                                                    color: Colors.grey[900]),
+                                              ),
                                             ),
                                             MaterialButton(
+                                              elevation: 1,
+                                              color: Colors.amber[400],
                                               onPressed: () {
                                                 sure = true;
                                                 Navigator.pop(context);
                                               },
-                                              child: Text('Yes'),
+                                              child: Text(
+                                                'Yes',
+                                                style: TextStyle(
+                                                  fontSize: 16.0,
+                                                  color: Colors.grey[900],
+                                                ),
+                                              ),
                                             )
                                           ],
                                         )
@@ -90,12 +121,15 @@ class _HomeState extends State<Home> {
                                 );
                               },
                             );
-                            print(sure);
-
-//                            setState(() {
-//                              _goalDao.remove(goal.id);
-//                              goals.remove(goal);
-//                            });
+                            if (sure) {
+                              setState(() {
+                                _goalDao.remove(goal.id);
+                                goals.remove(goal);
+                              });
+                            }
+                            else {
+                              setState(() {});
+                            }
                           },
                           child: GoalTile(goal));
                     },

@@ -28,7 +28,7 @@ class _GoalTileState extends State<GoalTile> {
               ),
             ),
             Expanded(
-              flex: 5,
+              flex: 2,
               child: Text(
                 widget.goal.title,
                 style: _titleTextStyle,
