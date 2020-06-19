@@ -15,10 +15,15 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final GoalDao _goalDao = GoalDao();
 
+  void callback() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white10,
         title: Text(widget.title),
         centerTitle: true,
       ),
@@ -131,7 +136,7 @@ class _HomeState extends State<Home> {
                               setState(() {});
                             }
                           },
-                          child: GoalTile(goal));
+                          child: GoalTile(this.callback, goal));
                     },
                     itemCount: goals.length,
                   );
@@ -163,7 +168,7 @@ class _HomeState extends State<Home> {
         },
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.white10,
+        color: Colors.white12,
         child: Container(height: 50.0),
         shape: CircularNotchedRectangle(),
       ),

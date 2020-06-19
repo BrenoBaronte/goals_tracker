@@ -16,6 +16,12 @@ class GoalDao {
   static const String _countUnit = 'countUnit';
   static const String _feeling = 'feeling';
 
+  Future updateCount(Goal goal) async {
+    final Database db = await getDatabase();
+    return db.rawUpdate(
+        'UPDATE $_tableName SET $_count=${goal.count} WHERE $_id=${goal.id}');
+  }
+
   Future remove(int goalId) async {
     final Database db = await getDatabase();
     return db.rawDelete('DELETE FROM $_tableName WHERE $_id=$goalId');

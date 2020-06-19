@@ -1,16 +1,20 @@
+import 'package:build/database/dao/goal_dao.dart';
 import 'package:build/models/goal.dart';
 import 'package:flutter/material.dart';
 
 class GoalTile extends StatefulWidget {
+  final Function callback;
   final Goal goal;
 
-  GoalTile(this.goal);
+  GoalTile(this.callback, this.goal);
 
   @override
   _GoalTileState createState() => _GoalTileState();
 }
 
 class _GoalTileState extends State<GoalTile> {
+  final GoalDao _goalDao = GoalDao();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -41,27 +45,15 @@ class _GoalTileState extends State<GoalTile> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              SizedBox(
-                width: 10,
-              ),
               Expanded(
-                child: Text(
-                  widget.goal.countUnit.toString(),
-                  style: _tileTextStyle,
-                ),
-              ),
-              Expanded(
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      'Feeling',
-                      style: _tileTextStyle,
-                    ),
-                    Expanded(
-                      child: Icon(IconData(widget.goal.feeling,
-                          fontFamily: 'MaterialIcons')),
-                    )
-                  ],
+                child: IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () {
+                    widget.goal.increment();
+                    _goalDao.updateCount(widget.goal);
+                    widget.callback();
+                    print('pressed');
+                  },
                 ),
               ),
               Expanded(
@@ -80,6 +72,45 @@ class _GoalTileState extends State<GoalTile> {
                   },
                 ),
               ),
+//              SizedBox(
+//                width: 10,
+//              ),
+//              Expanded(
+//                child: Text(
+//                  widget.goal.countUnit.toString(),
+//                  style: _tileTextStyle,
+//                ),
+//              ),
+//              Expanded(
+//                child: Row(
+//                  children: <Widget>[
+//                    Text(
+//                      'Feeling',
+//                      style: _tileTextStyle,
+//                    ),
+//                    Expanded(
+//                      child: Icon(IconData(widget.goal.feeling,
+//                          fontFamily: 'MaterialIcons')),
+//                    )
+//                  ],
+//                ),
+//              ),
+//              Expanded(
+//                child: IconButton(
+//                  icon: Icon(Icons.launch),
+//                  onPressed: () {
+//                    Navigator.of(context).pushNamed(
+//                      '/edit',
+//                      arguments: {
+//                        'title': widget.goal.title,
+//                        'feeling': widget.goal.feeling,
+//                        'count': widget.goal.count.toString(),
+//                        'countUnit': widget.goal.countUnit,
+//                      },
+//                    );
+//                  },
+//                ),
+//              ),
             ],
           ),
         ],
