@@ -43,74 +43,47 @@ class _GoalTileState extends State<GoalTile> {
         ),
         children: <Widget>[
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Expanded(
-                child: IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () {
-                    widget.goal.increment();
-                    _goalDao.updateCount(widget.goal);
-                    widget.callback();
-                    print('pressed');
-                  },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text('Add', style: _tileTextStyle,),
+                    IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () {
+                        widget.goal.increment();
+                        _goalDao.updateCount(widget.goal);
+                        widget.callback();
+                        print('pressed');
+                      },
+                    ),
+                  ],
                 ),
               ),
               Expanded(
-                child: IconButton(
-                  icon: Icon(Icons.launch),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(
-                      '/edit',
-                      arguments: {
-                        'title': widget.goal.title,
-                        'feeling': widget.goal.feeling,
-                        'count': widget.goal.count.toString(),
-                        'countUnit': widget.goal.countUnit,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text('Edit', style: _tileTextStyle,),
+                    IconButton(
+                      icon: Icon(Icons.launch),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(
+                          '/edit',
+                          arguments: {
+                            'title': widget.goal.title,
+                            'feeling': widget.goal.feeling,
+                            'count': widget.goal.count.toString(),
+                            'countUnit': widget.goal.countUnit,
+                          },
+                        );
                       },
-                    );
-                  },
+                    ),
+                  ],
                 ),
               ),
-//              SizedBox(
-//                width: 10,
-//              ),
-//              Expanded(
-//                child: Text(
-//                  widget.goal.countUnit.toString(),
-//                  style: _tileTextStyle,
-//                ),
-//              ),
-//              Expanded(
-//                child: Row(
-//                  children: <Widget>[
-//                    Text(
-//                      'Feeling',
-//                      style: _tileTextStyle,
-//                    ),
-//                    Expanded(
-//                      child: Icon(IconData(widget.goal.feeling,
-//                          fontFamily: 'MaterialIcons')),
-//                    )
-//                  ],
-//                ),
-//              ),
-//              Expanded(
-//                child: IconButton(
-//                  icon: Icon(Icons.launch),
-//                  onPressed: () {
-//                    Navigator.of(context).pushNamed(
-//                      '/edit',
-//                      arguments: {
-//                        'title': widget.goal.title,
-//                        'feeling': widget.goal.feeling,
-//                        'count': widget.goal.count.toString(),
-//                        'countUnit': widget.goal.countUnit,
-//                      },
-//                    );
-//                  },
-//                ),
-//              ),
             ],
           ),
         ],
