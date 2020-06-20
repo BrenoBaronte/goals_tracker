@@ -68,7 +68,7 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
                 ),
               ),
             ),
-            // count input area // todo: trim 0 on left
+            // count input area
             Flexible(
               child: Container(
                 child: Center(

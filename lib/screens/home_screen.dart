@@ -75,7 +75,7 @@ class _HomeState extends State<Home> {
                               },
                             );
                           },
-                          child: GoalTile(this.callback, goal));
+                          child: GoalTile(goal));
                     },
                     itemCount: goals.length,
                   );

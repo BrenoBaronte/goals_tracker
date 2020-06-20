@@ -3,10 +3,9 @@ import 'package:build/models/goal.dart';
 import 'package:flutter/material.dart';
 
 class GoalTile extends StatefulWidget {
-  final Function callback;
   final Goal goal;
 
-  GoalTile(this.callback, this.goal);
+  GoalTile(this.goal);
 
   @override
   _GoalTileState createState() => _GoalTileState();
@@ -55,8 +54,7 @@ class _GoalTileState extends State<GoalTile> {
                       onPressed: () {
                         widget.goal.increment();
                         _goalDao.updateCount(widget.goal);
-                        widget.callback();
-                        print('pressed');
+                        setState(() {});
                       },
                     ),
                   ],
