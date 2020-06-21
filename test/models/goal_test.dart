@@ -11,8 +11,6 @@ main() {
       });
 
       test('Goal count initial value should be zero', () {
-
-
         expect(goal.count, 0);
       });
 
@@ -34,6 +32,10 @@ main() {
         goal.decrement();
 
         expect(goal.count, 0);
+      });
+
+      test('Goal could not allow negative number on count value', (){
+        expect(() => Goal(1, 'title', -1, 'countUnit', 1), throwsAssertionError);
       });
     });
 }

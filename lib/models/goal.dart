@@ -11,7 +11,7 @@ class Goal {
     this.count,
     this.countUnit,
     this.feeling,
-  );
+  ): assert(count >= 0);
 
   void increment() => count++;
 

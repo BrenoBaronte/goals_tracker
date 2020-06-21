@@ -23,23 +23,29 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
 
   int _currentFeeling = 3;
   int _currentFeelingIcon = 59410;
+  int _currentColorStrength = 300;
 
   _setIconCodePoint(int currentFeeling) {
     switch (currentFeeling) {
       case 1:
         _currentFeelingIcon = Icons.sentiment_very_dissatisfied.codePoint;
+        _currentColorStrength = 100;
         break;
       case 2:
         _currentFeelingIcon = Icons.sentiment_dissatisfied.codePoint;
+        _currentColorStrength = 200;
         break;
       case 3:
         _currentFeelingIcon = Icons.sentiment_neutral.codePoint;
+        _currentColorStrength = 300;
         break;
       case 4:
         _currentFeelingIcon = Icons.sentiment_satisfied.codePoint;
+        _currentColorStrength = 400;
         break;
       case 5:
         _currentFeelingIcon = Icons.sentiment_very_satisfied.codePoint;
+        _currentColorStrength = 500;
         break;
     }
   }
@@ -109,7 +115,8 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
                               return 'Please enter a count value';
                             }
                             try {
-                              int.parse(value);
+                              if (int.parse(value) < 0)
+                                return 'Please enter a positive value';
                             } catch (e) {
                               return 'Please enter a numeric value';
                             }
@@ -139,6 +146,7 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
                               return 'Please enter a count measure';
                             }
                             return null;
+                            // feeling area
                           },
                         )
                       ],
@@ -147,7 +155,6 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
                 ),
               ),
             ),
-            // feeling area // todo: do it right
             Flexible(
               child: Container(
                 child: Column(
@@ -159,7 +166,7 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
                       ),
                     ),
                     Slider(
-                      activeColor: Colors.amber[400],
+                      activeColor: Colors.amber[(_currentColorStrength ?? 400)],
                       inactiveColor: Colors.white,
                       value: (_currentFeeling ?? 3).toDouble(),
                       max: 5,
