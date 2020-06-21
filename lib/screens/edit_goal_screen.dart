@@ -24,6 +24,7 @@ class _GoalEditState extends State<GoalEdit> {
             Expanded(
               child: Column(
                 children: <Widget>[
+                  // title area
                   Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -43,9 +44,11 @@ class _GoalEditState extends State<GoalEdit> {
                       ],
                     ),
                   ),
+                  // count and feeling areas
                   Expanded(
                     child: Row(
                       children: <Widget>[
+                        // count area
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -71,6 +74,7 @@ class _GoalEditState extends State<GoalEdit> {
                             ),
                           ),
                         ),
+                        // feeling area
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -100,7 +104,8 @@ class _GoalEditState extends State<GoalEdit> {
               ),
             ),
             Expanded(
-              child: Container(),
+              child: Container(
+              ),
             ),
           ],
         ),

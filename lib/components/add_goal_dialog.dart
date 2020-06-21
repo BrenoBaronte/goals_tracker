@@ -21,6 +21,29 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
   final TextEditingController _countUnitController =
       TextEditingController(text: 'Days');
 
+  int _currentFeeling = 3;
+  int _currentFeelingIcon = 59410;
+
+  _setIconCodePoint(int currentFeeling) {
+    switch (currentFeeling) {
+      case 1:
+        _currentFeelingIcon = Icons.sentiment_very_dissatisfied.codePoint;
+        break;
+      case 2:
+        _currentFeelingIcon = Icons.sentiment_dissatisfied.codePoint;
+        break;
+      case 3:
+        _currentFeelingIcon = Icons.sentiment_neutral.codePoint;
+        break;
+      case 4:
+        _currentFeelingIcon = Icons.sentiment_satisfied.codePoint;
+        break;
+      case 5:
+        _currentFeelingIcon = Icons.sentiment_very_satisfied.codePoint;
+        break;
+    }
+  }
+
   @override
   void dispose() {
     _titleController.dispose();
@@ -127,14 +150,29 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
             // feeling area // todo: do it right
             Flexible(
               child: Container(
-                child: Center(
-                  child: Column(
-                    children: <Widget>[
-                      Text('Feeling', style: TextStyle(fontSize: 20.0)),
-                      SizedBox(height: 10.0),
-                      Icon(Icons.sentiment_very_satisfied),
-                    ],
-                  ),
+                child: Column(
+                  children: <Widget>[
+                    Icon(
+                      IconData(
+                        _currentFeelingIcon,
+                        fontFamily: 'MaterialIcons',
+                      ),
+                    ),
+                    Slider(
+                      activeColor: Colors.amber[400],
+                      inactiveColor: Colors.white,
+                      value: (_currentFeeling ?? 3).toDouble(),
+                      max: 5,
+                      min: 1,
+                      divisions: 4,
+                      onChanged: (value) {
+                        setState(() {
+                          _currentFeeling = value.round();
+                          _setIconCodePoint(_currentFeeling);
+                        });
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -156,7 +194,7 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
                             _titleController.text,
                             int.parse(_countController.text),
                             _countUnitController.text,
-                            Icons.sentiment_very_satisfied.codePoint,
+                            _currentFeelingIcon,
                           );
                           _goalDao.save(goal);
                           this.widget.callback();
