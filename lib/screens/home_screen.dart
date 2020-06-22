@@ -24,7 +24,6 @@ class _HomeState extends State<Home> {
 
   void removeCallback(Goal goal) {
     setState(() {
-      print('1heya');
       _goalDao.remove(goal.id);
       goals.remove(goal);
     });
