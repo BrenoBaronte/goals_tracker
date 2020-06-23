@@ -1,5 +1,6 @@
 import 'package:build/database/dao/goal_dao.dart';
 import 'package:build/models/goal.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddGoalDialog extends StatefulWidget {
@@ -157,7 +158,9 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
             ),
             Flexible(
               child: Container(
-                child: Column(
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: <Widget>[
                     Icon(
                       IconData(
