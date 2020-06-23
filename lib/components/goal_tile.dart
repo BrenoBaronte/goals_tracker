@@ -48,14 +48,19 @@ class _GoalTileState extends State<GoalTile> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Add', style: _tileTextStyle,),
-                    IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: () {
+                    GestureDetector(
+                      onTap: () {
                         widget.goal.increment();
                         _goalDao.updateCount(widget.goal);
                         setState(() {});
                       },
+                      child: Row(
+                        children: <Widget>[
+                          Text('Add', style: _tileTextStyle),
+                          SizedBox(width: 10),
+                          Icon(Icons.add)
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -64,10 +69,9 @@ class _GoalTileState extends State<GoalTile> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Edit', style: _tileTextStyle,),
-                    IconButton(
-                      icon: Icon(Icons.launch),
-                      onPressed: () {
+                    GestureDetector(
+
+                      onTap: () {
                         Navigator.of(context).pushNamed(
                           '/edit',
                           arguments: {
@@ -78,6 +82,13 @@ class _GoalTileState extends State<GoalTile> {
                           },
                         );
                       },
+                      child: Row(
+                        children: <Widget>[
+                          Text('Edit', style: _tileTextStyle),
+                          SizedBox(width: 10),
+                          Icon(Icons.launch)
+                        ],
+                      ),
                     ),
                   ],
                 ),
