@@ -22,6 +22,7 @@ class _GoalTileState extends State<GoalTile> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            // count
             Expanded(
               flex: 1,
               child: Text(
@@ -30,6 +31,7 @@ class _GoalTileState extends State<GoalTile> {
                 overflow: TextOverflow.fade,
               ),
             ),
+            // title
             Expanded(
               flex: 2,
               child: Text(
@@ -41,59 +43,82 @@ class _GoalTileState extends State<GoalTile> {
           ],
         ),
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () {
-                        widget.goal.increment();
-                        _goalDao.updateCount(widget.goal);
-                        setState(() {});
-                      },
-                      child: Row(
-                        children: <Widget>[
-                          Text('Add', style: _tileTextStyle),
-                          SizedBox(width: 10),
-                          Icon(Icons.add)
-                        ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                // subtract button
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {
+                          widget.goal.decrement();
+                          _goalDao.updateCount(widget.goal);
+                          setState(() {});
+                        },
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.remove)
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    GestureDetector(
-
-                      onTap: () {
-                        Navigator.of(context).pushNamed(
-                          '/edit',
-                          arguments: {
-                            'title': widget.goal.title,
-                            'feeling': widget.goal.feeling,
-                            'count': widget.goal.count.toString(),
-                            'countUnit': widget.goal.countUnit,
-                          },
-                        );
-                      },
-                      child: Row(
-                        children: <Widget>[
-                          Text('Edit', style: _tileTextStyle),
-                          SizedBox(width: 10),
-                          Icon(Icons.launch)
-                        ],
+                // add button
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {
+                          widget.goal.increment();
+                          _goalDao.updateCount(widget.goal);
+                          setState(() {});
+                        },
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.add)
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+// todo: edit button - implement edit screen first
+//              Expanded(
+//                child: Row(
+//                  mainAxisAlignment: MainAxisAlignment.center,
+//                  children: <Widget>[
+//                    GestureDetector(
+//
+//                      onTap: () {
+//                        Navigator.of(context).pushNamed(
+//                          '/edit',
+//                          arguments: {
+//                            'title': widget.goal.title,
+//                            'feeling': widget.goal.feeling,
+//                            'count': widget.goal.count.toString(),
+//                            'countUnit': widget.goal.countUnit,
+//                          },
+//                        );
+//                      },
+//                      child: Row(
+//                        children: <Widget>[
+//                          Text('Edit', style: _tileTextStyle),
+//                          SizedBox(width: 10),
+//                          Icon(Icons.launch)
+//                        ],
+//                      ),
+//                    ),
+//                  ],
+//                ),
+//              ),
+              ],
+            ),
           ),
         ],
       ),

@@ -19,7 +19,7 @@ Future<Null> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final String title = 'Build';
+  final String title = 'Goals Tracker';
 
   @override
   Widget build(BuildContext context) {

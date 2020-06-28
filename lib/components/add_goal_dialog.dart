@@ -130,62 +130,64 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
                 ),
               ),
             ),
-            // count unit area
-            Flexible(
-              child: Container(
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Wrap(
-                      children: <Widget>[
-                        TextFormField(
-                          controller: _countUnitController,
-                          decoration:
-                              InputDecoration(hintText: 'Count measure'),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Please enter a count measure';
-                            }
-                            return null;
-                            // feeling area
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Flexible(
-              child: Container(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                      IconData(
-                        _currentFeelingIcon,
-                        fontFamily: 'MaterialIcons',
-                      ),
-                    ),
-                    Slider(
-                      activeColor: Colors.amber[(_currentColorStrength ?? 400)],
-                      inactiveColor: Colors.white,
-                      value: (_currentFeeling ?? 3).toDouble(),
-                      max: 5,
-                      min: 1,
-                      divisions: 4,
-                      onChanged: (value) {
-                        setState(() {
-                          _currentFeeling = value.round();
-                          _setIconCodePoint(_currentFeeling);
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
+// todo count and input area - implement edit first
+//            // count unit area
+//            Flexible(
+//              child: Container(
+//                child: Center(
+//                  child: Padding(
+//                    padding: EdgeInsets.all(10.0),
+//                    child: Wrap(
+//                      children: <Widget>[
+//                        TextFormField(
+//                          controller: _countUnitController,
+//                          decoration:
+//                              InputDecoration(hintText: 'Count measure'),
+//                          validator: (value) {
+//                            if (value.isEmpty) {
+//                              return 'Please enter a count measure';
+//                            }
+//                            return null;
+//                            // feeling area
+//                          },
+//                        )
+//                      ],
+//                    ),
+//                  ),
+//                ),
+//              ),
+//            ),
+//            // feeling area
+//            Flexible(
+//              child: Container(
+//                child: Wrap(
+//                  alignment: WrapAlignment.center,
+//                  crossAxisAlignment: WrapCrossAlignment.center,
+//                  children: <Widget>[
+//                    Icon(
+//                      IconData(
+//                        _currentFeelingIcon,
+//                        fontFamily: 'MaterialIcons',
+//                      ),
+//                    ),
+//                    Slider(
+//                      activeColor: Colors.amber[(_currentColorStrength ?? 400)],
+//                      inactiveColor: Colors.white,
+//                      value: (_currentFeeling ?? 3).toDouble(),
+//                      max: 5,
+//                      min: 1,
+//                      divisions: 4,
+//                      onChanged: (value) {
+//                        setState(() {
+//                          _currentFeeling = value.round();
+//                          _setIconCodePoint(_currentFeeling);
+//                        });
+//                      },
+//                    ),
+//                  ],
+//                ),
+//              ),
+//            ),
             // create button
             Flexible(
               child: Center(
